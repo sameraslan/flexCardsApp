@@ -85,12 +85,12 @@ export default function Login({
       <div className="container flex min-h-screen items-center justify-center py-8">
         <div className="card w-full max-w-sm bg-secondary dark:bg-primary">
           <div className="card-body flex flex-col gap-0 p-4 sm:p-8">
-            <form
+            {/* <form
               onSubmit={handleSubmit(onSubmit)}
               className="mb-6 flex flex-col gap-2"
             >
-              <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-              <div className="form-control">
+              <input name="csrfToken" type="hidden" defaultValue={csrfToken} /> */}
+              {/* <div className="form-control">
                 <label className="label" htmlFor="email">
                   <span
                     className={cx("label-text", {
@@ -156,14 +156,14 @@ export default function Login({
               >
                 {isSubmitting ? "Loading" : "Sign in"}
               </button>
-            </form>
-            <p className="text-center">
+            </form> */}
+            {/* <p className="text-center">
               Don&apos;t have an account?{" "}
               <Link className="link-hover link" href="/auth/register">
                 Register
               </Link>
-            </p>
-            <div className="divider my-6">Or continue with</div>
+            </p> */}
+            <div className="divider my-6">Sign in with</div>
             {providers ? (
               <div className="flex gap-2">
                 {Object.values(providers).map((provider) => {
