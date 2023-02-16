@@ -162,7 +162,7 @@ function DashboardList() {
         <p className="text-center">Add your first car to show your dashboard</p>
         <Link href="/app/cars/add" className="btn mt-4">
           <FiPlus className="mr-2" size={20} />
-          Add car
+          Add Deck
         </Link>
       </div>
     );

@@ -78,7 +78,7 @@ export default function EditCar({
       {!isLoading ? (
         <>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-3xl">Update car</h2>
+            <h2 className="text-3xl">Update Deck</h2>
           </div>
           <div className="card w-full bg-secondary dark:bg-primary">
             <div className="card-body flex flex-col gap-0 p-4 sm:p-8">

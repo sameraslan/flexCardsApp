@@ -39,9 +39,9 @@ module.exports = {
     themes: [
       {
         "flexCardsLight": {
-          primary: "#9abef5",
+          primary: "#007ea4",
           secondary: "#c0c1c4",
-          accent: "#9abef5",
+          accent: "#007ea4",
           neutral: "#9ca3af",
           "base-100": "#f3f4f6",
           "base-200": "#e5e7eb",

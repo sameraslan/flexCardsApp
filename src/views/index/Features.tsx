@@ -1,39 +1,38 @@
 import cx from "classnames";
-import { GiAutoRepair } from "react-icons/gi";
-import { ImStatsDots } from "react-icons/im";
-import { IoCarSportSharp } from "react-icons/io5";
+import { BsCardText } from "react-icons/bs"
+import { RxCardStack } from "react-icons/rx"
+import { GiMagnifyingGlass } from "react-icons/gi"
 
 const features = [
   {
     id: 1,
-    title: "Card Management",
+    title: "Flashcards",
     description:
-      "Test description",
-    icon: <IoCarSportSharp className="h-8 w-8" />,
+      "Create, read, update, and delete flashcards",
+    icon: <BsCardText className="h-8 w-8" />,
   },
   {
     id: 2,
-    title: "Add card logging",
+    title: "Decks",
     description:
-      "Test additions",
-    icon: <GiAutoRepair className="h-8 w-8" />,
+      "Create flashcard decks",
+    icon: <RxCardStack className="h-8 w-8" />,
   },
   {
     id: 3,
-    title: "Statistics",
+    title: "Study",
     description:
-      "Test statistics",
-    icon: <ImStatsDots className="h-8 w-8" />,
+      "View decks and their flashcards",
+    icon: <GiMagnifyingGlass className="h-8 w-8" />,
   },
 ];
 
 export default function Features() {
   return (
-    <section className="py-20 even:bg-base-200">
-      <div className="container mx-auto flex flex-col gap-12 px-6 py-10 md:gap-20">
+    <section className="py-10 even:bg-base-200">
+      <div className="container mx-auto flex flex-col gap-4 px-6 py-0 md:gap-4">
         <h2 className="text-center text-3xl font-black capitalize leading-10 text-accent md:text-5xl lg:text-6xl">
-          Explore our awesome{" "}
-          <span className="underline decoration-secondary">features</span>
+          Features
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:mt-12 xl:grid-cols-3 xl:gap-12">
           {features.map((feature, index) => (

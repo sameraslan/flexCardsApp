@@ -79,7 +79,7 @@ function CarsList() {
         </p>
         <Link href="/app/cars/add" className="btn mt-4">
           <FiPlus className="mr-2" size={20} />
-          Add car
+          Add Deck
         </Link>
       </div>
     );
@@ -88,10 +88,10 @@ function CarsList() {
   return (
     <>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-3xl">Your cars</h2>
+        <h2 className="text-3xl">Your Decks</h2>
         <Link href="/app/cars/add" className="btn">
           <FiPlus className="mr-2" size={20} />
-          Add car
+          Add Deck
         </Link>
       </div>
       <div
@@ -130,7 +130,7 @@ function CarsList() {
                 </div>
               </div>
               <div className="flex items-end justify-center gap-2 pt-3">
-                <div
+                {/* <div
                   className="tooltip tooltip-info"
                   data-tip="Show car repairs"
                 >
@@ -141,8 +141,8 @@ function CarsList() {
                   >
                     <FiTool size={18} />
                   </Link>
-                </div>
-                <div className="tooltip tooltip-success" data-tip="Edit car">
+                </div> */}
+                <div className="tooltip tooltip-success" data-tip="Edit Deck">
                   <Link
                     className="btn-outline btn-success btn h-10 min-h-[2.5rem] border-none px-3"
                     aria-label="Edit car"
@@ -151,7 +151,7 @@ function CarsList() {
                     <FiEdit size={18} />
                   </Link>
                 </div>
-                <div className="tooltip tooltip-error" data-tip="Delete car">
+                <div className="tooltip tooltip-error" data-tip="Delete Deck">
                   <button
                     className="btn-outline btn-error btn h-10 min-h-[2.5rem] border-none px-3"
                     aria-label="Delete car"
@@ -196,10 +196,10 @@ function CarsList() {
             <Dialog.Panel className="rounded-lg bg-base-200 p-6 text-center shadow">
               <FiAlertCircle className="mx-auto mb-4" size={56} />
               <Dialog.Title className="mb-2 text-xl font-normal text-accent">
-                Delete car?
+                Delete deck?
               </Dialog.Title>
               <Dialog.Description className="mb-5 text-base font-normal">
-                This will permanently delete this car, including all of repairs.
+                This will permanently delete this deck, including all of its cards.
               </Dialog.Description>
               <button
                 className="btn-ghost btn mr-2"
