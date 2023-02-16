@@ -1,0 +1,23 @@
+@import "./react-toastify.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#ghostery-tracker-tally {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  @apply motion-reduce:transition-none motion-reduce:hover:transform-none;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  @apply rounded-lg !outline-none !ring-2 !ring-accent !ring-offset-2 !ring-offset-primary;
+}

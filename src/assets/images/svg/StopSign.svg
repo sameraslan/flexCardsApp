@@ -1,0 +1,24 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  fill="none"
+>
+  <g clip-path="url(#clip0_403_358)">
+    <path
+      d="M6 150L149.5 6H362L506 149.5V362L362 506H150L6 362V150Z"
+      stroke="currentColor"
+      stroke-width="11"
+    />
+    <path
+      d="M29 159L159 29H353L483 159V353L353 483H159L29 349V159Z"
+      fill="currentColor"
+      stroke="currentColor"
+      stroke-width="11"
+    />
+  </g>
+  <defs>
+    <clipPath id="clip0_403_358">
+      <rect fill="currentColor" />
+    </clipPath>
+  </defs>
+</svg>
