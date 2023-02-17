@@ -25,7 +25,7 @@ export default function AddCar({
   const { mutate } = trpc.car.create.useMutation({
     onSuccess: () => {
       toast.success("Car added successfully!");
-      router.push("/app/cars");
+      router.push("//app/decks");
     },
   });
 

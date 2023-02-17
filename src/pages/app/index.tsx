@@ -160,7 +160,7 @@ function DashboardList() {
         <FiAlertCircle className="mx-auto mb-4" size={56} />
         <h2 className="text-center text-3xl">You don&apos;t have any cars</h2>
         <p className="text-center">Add your first car to show your dashboard</p>
-        <Link href="/app/cars/add" className="btn mt-4">
+        <Link href="//app/decks/add" className="btn mt-4">
           <FiPlus className="mr-2" size={20} />
           Add Deck
         </Link>

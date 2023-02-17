@@ -17,7 +17,7 @@ type Props = {
 
 const links = [
   { name: "Dashboard", href: "/app", exact: true },
-  { name: "Cars", href: "/app/cars" },
+  { name: "My Decks", href: "//app/decks" },
 ];
 
 export default function Header({ user }: Props) {

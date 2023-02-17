@@ -50,18 +50,6 @@ export default function Seo({
           <meta property="og:image" content={new URL(image, url).href} />
           <meta property="og:site_name" content="Samer Aslan" />
           <meta name="og:locale" property="og:locale" content="pl_PL" />
-
-          <meta property="twitter:card" content="summary_large_image" />
-          <meta
-            property="twitter:title"
-            content={
-              title ? `${title} | FlashCards Deck` : "FlashCards Deck"
-            }
-          />
-          <meta property="twitter:description" content={description} />
-          <meta property="twitter:url" content={url} />
-          <meta property="twitter:image" content={new URL(image, url).href} />
-          <meta name="twitter:creator" content="@teziovsky" />
         </>
       ) : null}
     </Head>

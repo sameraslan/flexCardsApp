@@ -77,7 +77,7 @@ function CarsList() {
         <p className="text-center">
           Add your first car to start tracking your repairs
         </p>
-        <Link href="/app/cars/add" className="btn mt-4">
+        <Link href="//app/decks/add" className="btn mt-4">
           <FiPlus className="mr-2" size={20} />
           Add Deck
         </Link>
@@ -89,7 +89,7 @@ function CarsList() {
     <>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-3xl">Your Decks</h2>
-        <Link href="/app/cars/add" className="btn">
+        <Link href="//app/decks/add" className="btn">
           <FiPlus className="mr-2" size={20} />
           Add Deck
         </Link>
@@ -137,7 +137,7 @@ function CarsList() {
                   <Link
                     className="btn-outline btn-info btn h-10 min-h-[2.5rem] border-none px-3"
                     aria-label="Show car repairs"
-                    href={`/app/cars/${car.id}/repairs`}
+                    href={`//app/decks/${car.id}/repairs`}
                   >
                     <FiTool size={18} />
                   </Link>
@@ -146,7 +146,7 @@ function CarsList() {
                   <Link
                     className="btn-outline btn-success btn h-10 min-h-[2.5rem] border-none px-3"
                     aria-label="Edit car"
-                    href={`/app/cars/${car.id}`}
+                    href={`//app/decks/${car.id}`}
                   >
                     <FiEdit size={18} />
                   </Link>

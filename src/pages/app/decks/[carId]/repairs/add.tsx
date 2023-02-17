@@ -47,7 +47,7 @@ export default function AddRepair({
     onSuccess: () => {
       toast.success("Repair added successfully!");
       router.push({
-        pathname: "/app/cars/[carId]/repairs",
+        pathname: "//app/decks/[carId]/repairs",
         query: { carId: router.query.carId },
       });
     },

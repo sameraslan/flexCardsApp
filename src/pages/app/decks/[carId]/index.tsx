@@ -49,7 +49,7 @@ export default function EditCar({
   const { mutate } = trpc.car.update.useMutation({
     onSuccess: () => {
       toast.success("Car updated successfully!");
-      router.push("/app/cars");
+      router.push("//app/decks");
     },
   });
 
