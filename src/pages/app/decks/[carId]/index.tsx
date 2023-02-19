@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CarType, EngineType, GearboxType } from "@prisma/client";
-import AddRepair from "./repair/add"
+import AddRepair from "./cards/add"
 import { useState } from "react";
 import cx from "classnames";
 import type {
