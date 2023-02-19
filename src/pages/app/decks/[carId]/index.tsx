@@ -66,7 +66,6 @@ export default function EditCar({
         setValue("type", data?.type ?? CarType.Coupe);
         setValue("make", data?.make ?? "");
         setValue("model", data?.model ?? "");
-        setValue("vin", data?.vin ?? "");
       },
       enabled: Boolean(router.query.carId),
       ...queryOnlyOnce,
@@ -108,7 +107,7 @@ export default function EditCar({
         ref={carsParent}
         className="grid grid-cols-1 justify-center gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
-        {cards?.map((card) => (
+        {cards?.map((card: any) => (
           <div className="card min-h-[240px] bg-base-200" key={card.id}>
             <div className="flex h-full flex-col p-5">
               <div className="flex flex-grow flex-col gap-1 pb-3">

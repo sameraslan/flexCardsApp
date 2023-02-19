@@ -43,16 +43,16 @@ export const carRouter = router({
         vin: true,
         generation: true,
         productionYear: true,
-        repairs: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            date: true,
-            mileage: true,
-            price: true,
-          },
-        },
+        // repairs: {
+        //   select: {
+        //     id: true,
+        //     title: true,
+        //     description: true,
+        //     date: true,
+        //     mileage: true,
+        //     price: true,
+        //   },
+        // },
       },
     });
   }),

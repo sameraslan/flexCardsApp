@@ -14,7 +14,7 @@ import Loader from "@/components/Loader";
 import Seo from "@/components/Seo";
 import Layout from "@/layouts/Layout";
 import { getServerAuthSession } from "@/server/common/get-server-auth-session";
-import { formatDate, formatMileage, formatPrice } from "@/utils/formatters";
+import { formatDate } from "@/utils/formatters";
 import { trpc } from "@/utils/trpc";
 import AddRepair from "./add"
 
@@ -105,7 +105,7 @@ function RepairsList() {
         ref={repairsParent}
         className="grid grid-cols-1 justify-center gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
-        {repairs.map((repair) => (
+        {repairs.map((repair: any) => (
           <div className="card min-h-[240px] bg-base-200" key={repair.id}>
             <div className="flex h-full flex-col divide-y divide-secondary p-5">
               <div className="flex flex-grow flex-col gap-1 pb-3">
@@ -121,11 +121,9 @@ function RepairsList() {
                 </p>
                 <p>
                   <span className="font-medium">Price:</span>{" "}
-                  {formatPrice(repair.price)}
                 </p>
                 <p className="mb-2">
                   <span className="font-medium">Mileage:</span>{" "}
-                  {formatMileage(repair.mileage)}
                 </p>
               </div>
               <div className="flex items-end justify-center gap-2 pt-3">
