@@ -74,7 +74,7 @@ export default function Login({
 
     if (result?.ok) {
       toast.success("Logged in successfully!");
-      router.push(result?.url ? result.url : "/app");
+      router.push(result?.url ? result.url : "/app/decks");
       return;
     }
   };
@@ -85,84 +85,6 @@ export default function Login({
       <div className="container flex min-h-screen items-center justify-center py-8">
         <div className="card w-full max-w-sm bg-secondary dark:bg-primary">
           <div className="card-body flex flex-col gap-0 p-0 sm:p-4">
-            {/* <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="mb-6 flex flex-col gap-2"
-            >
-              <input name="csrfToken" type="hidden" defaultValue={csrfToken} /> */}
-              {/* <div className="form-control">
-                <label className="label" htmlFor="email">
-                  <span
-                    className={cx("label-text", {
-                      "text-error": Boolean(errors.email?.message),
-                    })}
-                  >
-                    Your email
-                  </span>
-                </label>
-                <input
-                  id="email"
-                  type="text"
-                  className={cx(
-                    "input-bordered input shadow-none focus:border-accent",
-                    {
-                      "input-error": Boolean(errors.email?.message),
-                      "input-accent": !Boolean(errors.email?.message),
-                    }
-                  )}
-                  placeholder="example@gmail.com"
-                  {...register("email")}
-                />
-                <label htmlFor="email" className="label">
-                  <span className="label-text-alt text-error">
-                    {errors.email?.message}
-                  </span>
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label" htmlFor="password">
-                  <span
-                    className={cx("label-text", {
-                      "text-error": Boolean(errors.password?.message),
-                    })}
-                  >
-                    Your password
-                  </span>
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  className={cx(
-                    "input-bordered input shadow-none focus:border-accent",
-                    {
-                      "input-error": Boolean(errors.password?.message),
-                      "input-accent": !Boolean(errors.password?.message),
-                    }
-                  )}
-                  {...register("password")}
-                />
-                <label htmlFor="password" className="label">
-                  <span className="label-text-alt text-error">
-                    {errors.password?.message}
-                  </span>
-                </label>
-              </div>
-              <button
-                className={cx("btn-accent btn mt-2", {
-                  "btn-disabled loading": isSubmitting,
-                })}
-                disabled={isSubmitting}
-                type="submit"
-              >
-                {isSubmitting ? "Loading" : "Sign in"}
-              </button>
-            </form> */}
-            {/* <p className="text-center">
-              Don&apos;t have an account?{" "}
-              <Link className="link-hover link" href="/auth/register">
-                Register
-              </Link>
-            </p> */}
             <div className="divider my-6">Sign in with</div>
             {providers ? (
               <div className="flex gap-2">

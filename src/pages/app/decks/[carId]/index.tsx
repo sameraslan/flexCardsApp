@@ -1,5 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CarType, EngineType, GearboxType } from "@prisma/client";
+import AddRepair from "./repairs/add"
+import { useState } from "react";
 import cx from "classnames";
 import type {
   GetServerSidePropsContext,
@@ -9,6 +12,7 @@ import { useRouter } from "next/router";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 import Seo from "@/components/Seo";
 import Layout from "@/layouts/Layout";
@@ -17,11 +21,43 @@ import type { UpdateCarSchema } from "@/server/schema/car.schema";
 import { updateCarSchema } from "@/server/schema/car.schema";
 import { queryOnlyOnce } from "@/utils/react-query";
 import { trpc } from "@/utils/trpc";
+import {
+  FiAlertCircle,
+  FiEdit,
+  FiPlus,
+  FiRefreshCw,
+  FiTool,
+  FiTrash2,
+} from "react-icons/fi";
+import { AiFillPlusCircle } from "react-icons/ai";
+import { FaLessThanEqual } from "react-icons/fa";
+
+/*Now replace car id with deck id and showcase the flashcards the way it is rn*/
 
 export default function EditCar({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const [carsParent] = useAutoAnimate<HTMLDivElement>();
+
+  const {
+    data: cards,
+  } = trpc.repair.getAll.useQuery(
+    {
+      carId: router.query.carId as string,
+    },
+    {
+      enabled: Boolean(router.query.carId),
+    }
+  );
+
+  const utils = trpc.useContext();
+  const { mutate: deleteRepair } = trpc.repair.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Repair deleted successfully!");
+      utils.repair.getAll.invalidate();
+    },
+  });
 
   const { isLoading } = trpc.car.getOne.useQuery(
     { carId: router.query.carId as string },
@@ -31,44 +67,32 @@ export default function EditCar({
         setValue("make", data?.make ?? "");
         setValue("model", data?.model ?? "");
         setValue("vin", data?.vin ?? "");
-        setValue("generation", data?.generation ?? "");
-        setValue(
-          "productionYear",
-          data?.productionYear ?? new Date().getFullYear()
-        );
-        setValue("engineType", data?.engineType ?? EngineType.Diesel);
-        setValue("engineCapacity", data?.engineCapacity ?? 0);
-        setValue("enginePower", data?.enginePower ?? 0);
-        setValue("gearboxType", data?.gearboxType ?? GearboxType.Manual);
       },
       enabled: Boolean(router.query.carId),
       ...queryOnlyOnce,
     }
   );
 
-  const { mutate } = trpc.car.update.useMutation({
-    onSuccess: () => {
-      toast.success("Car updated successfully!");
-      router.push("//app/decks");
-    },
-  });
-
   const {
     setValue,
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
   } = useForm<UpdateCarSchema["body"]>({
     resolver: zodResolver(updateCarSchema.shape.body),
   });
 
-  const onSubmit: SubmitHandler<UpdateCarSchema["body"]> = (values) => {
-    mutate({
-      params: { carId: router.query.carId as string },
-      body: values,
-    });
-  };
+  const [addButton, setAddButton] = useState(false)
 
+  
+
+  /* Next step:
+    - Make it so that I can create individual flashcards on this page
+    - With a button to go left and right and then edit/delete individual ones
+    - Can make this page a view/edit flashcards page
+    - So do UI for this first with map stuff
+    - Then use repair as template for backend array of flashcards
+    - Boom done
+  */
+
+  /*Now I have it so that I can access and show repairs. Next, get the user to be able to add repairs */
   return (
     <Layout className="container pb-8 pt-24" user={user}>
       <Seo
@@ -77,347 +101,68 @@ export default function EditCar({
       />
       {!isLoading ? (
         <>
-          <div className="mb-4 flex items-center justify-between">
+          {/* <div className="mb-4 flex items-center justify-between">
             <h2 className="text-3xl">Update Deck</h2>
-          </div>
-          <div className="card w-full bg-secondary dark:bg-primary">
-            <div className="card-body flex flex-col gap-0 p-4 sm:p-8">
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-              >
-                <div className="form-control">
-                  <label className="label" htmlFor="type">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.type?.message),
-                      })}
-                    >
-                      Type
-                    </span>
-                  </label>
-                  <select
-                    id="type"
-                    defaultValue="Coupe"
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.type?.message),
-                        "input-accent": !Boolean(errors.type?.message),
-                      }
-                    )}
-                    {...register("type")}
+          </div> */}
+          <div
+        ref={carsParent}
+        className="grid grid-cols-1 justify-center gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        {cards?.map((card) => (
+          <div className="card min-h-[240px] bg-base-200" key={card.id}>
+            <div className="flex h-full flex-col p-5">
+              <div className="flex flex-grow flex-col gap-1 pb-3">
+                <h4 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
+                  {card.title}
+                </h4>
+              </div>
+              <p className="mb-4 flex-grow font-light text-gray-700 dark:text-gray-400">
+                  {card.description}
+              </p>
+              <div className="flex items-end justify-center gap-2 pt-3">
+                <div className="tooltip tooltip-success" data-tip="Edit card">
+                  <Link
+                    className="btn-outline btn-success btn h-10 min-h-[2.5rem] border-none px-3"
+                    aria-label="Edit card"
+                    href={`/app/decks/${card.carId}/repairs/${card.id}`}
                   >
-                    {Object.values(CarType).map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                  <label htmlFor="type" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.type?.message}
-                    </span>
-                  </label>
+                    <FiEdit size={18} />
+                  </Link>
                 </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="make">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.make?.message),
-                      })}
-                    >
-                      Make
-                    </span>
-                  </label>
-                  <input
-                    id="make"
-                    type="text"
-                    defaultValue=""
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.make?.message),
-                        "input-accent": !Boolean(errors.make?.message),
-                      }
-                    )}
-                    placeholder="Honda"
-                    {...register("make")}
-                  />
-                  <label htmlFor="make" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.make?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="model">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.model?.message),
-                      })}
-                    >
-                      Model
-                    </span>
-                  </label>
-                  <input
-                    id="model"
-                    type="text"
-                    defaultValue=""
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.model?.message),
-                        "input-accent": !Boolean(errors.model?.message),
-                      }
-                    )}
-                    placeholder="Civic"
-                    {...register("model")}
-                  />
-                  <label htmlFor="model" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.model?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="vin">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.vin?.message),
-                      })}
-                    >
-                      VIN
-                    </span>
-                  </label>
-                  <input
-                    id="vin"
-                    type="text"
-                    defaultValue=""
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.vin?.message),
-                        "input-accent": !Boolean(errors.vin?.message),
-                      }
-                    )}
-                    {...register("vin")}
-                  />
-                  <label htmlFor="vin" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.vin?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="generation">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.generation?.message),
-                      })}
-                    >
-                      Generation
-                    </span>
-                  </label>
-                  <input
-                    id="generation"
-                    type="text"
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.generation?.message),
-                        "input-accent": !Boolean(errors.generation?.message),
-                      }
-                    )}
-                    placeholder="VIII"
-                    {...register("generation")}
-                  />
-                  <label htmlFor="generation" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.generation?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="productionYear">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.productionYear?.message),
-                      })}
-                    >
-                      Production Year
-                    </span>
-                  </label>
-                  <input
-                    id="productionYear"
-                    type="number"
-                    defaultValue={new Date().getFullYear()}
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.productionYear?.message),
-                        "input-accent": !Boolean(
-                          errors.productionYear?.message
-                        ),
-                      }
-                    )}
-                    {...register("productionYear", {
-                      valueAsNumber: true,
-                    })}
-                  />
-                  <label htmlFor="productionYear" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.productionYear?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="engineType">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.engineType?.message),
-                      })}
-                    >
-                      Engine Type
-                    </span>
-                  </label>
-                  <select
-                    id="engineType"
-                    {...register("engineType")}
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.engineType?.message),
-                        "input-accent": !Boolean(errors.engineType?.message),
-                      }
-                    )}
+                <div className="tooltip tooltip-error" data-tip="Delete card">
+                  <button
+                    className="btn-outline btn-error btn h-10 min-h-[2.5rem] border-none px-3"
+                    aria-label="Delete card"
+                    onClick={() => {
+                      deleteRepair({
+                        carId: card.carId,
+                        repairId: card.id,
+                      });
+                    }}
                   >
-                    {Object.values(EngineType).map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                  <label htmlFor="engineType" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.engineType?.message}
-                    </span>
-                  </label>
+                    <FiTrash2 size={18} />
+                  </button>
                 </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="engineCapacity">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.engineCapacity?.message),
-                      })}
-                    >
-                      Engine Capacity
-                    </span>
-                  </label>
-                  <input
-                    id="engineCapacity"
-                    type="number"
-                    defaultValue={0}
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.engineCapacity?.message),
-                        "input-accent": !Boolean(
-                          errors.engineCapacity?.message
-                        ),
-                      }
-                    )}
-                    {...register("engineCapacity", {
-                      valueAsNumber: true,
-                    })}
-                  />
-                  <label htmlFor="engineCapacity" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.engineCapacity?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="enginePower">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.enginePower?.message),
-                      })}
-                    >
-                      Engine Power
-                    </span>
-                  </label>
-                  <input
-                    id="enginePower"
-                    type="number"
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.enginePower?.message),
-                        "input-accent": !Boolean(errors.enginePower?.message),
-                      }
-                    )}
-                    defaultValue={0}
-                    {...register("enginePower", {
-                      valueAsNumber: true,
-                    })}
-                  />
-                  <label htmlFor="enginePower" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.enginePower?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="gearboxType">
-                    <span
-                      className={cx("label-text", {
-                        "text-error": Boolean(errors.gearboxType?.message),
-                      })}
-                    >
-                      Gearbox Type
-                    </span>
-                  </label>
-                  <select
-                    id="gearboxType"
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.gearboxType?.message),
-                        "input-accent": !Boolean(errors.gearboxType?.message),
-                      }
-                    )}
-                    {...register("gearboxType")}
-                  >
-                    {Object.values(GearboxType).map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                  <label htmlFor="gearboxType" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.gearboxType?.message}
-                    </span>
-                  </label>
-                </div>
-                <button
-                  className={cx(
-                    "btn-accent btn mx-auto mt-2 w-full max-w-sm sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5",
-                    {
-                      "btn-disabled loading": isSubmitting,
-                    }
-                  )}
-                  disabled={isSubmitting}
-                  type="submit"
-                >
-                  {isSubmitting ? "Updating car" : "Update car"}
-                </button>
-              </form>
+              </div>
             </div>
           </div>
+        ))}
+      </div>
         </>
       ) : null}
+      <div className="tooltip" data-tip="Add Card">
+                  <button
+                    className="btn-outline btn h-10 min-h-[2.5rem] border-none px-3"
+                    aria-label="Add card button"
+                    onClick={() => {
+                      setAddButton(!addButton)
+                    }}
+                  >
+                    <AiFillPlusCircle size={18} />
+                  </button>
+                </div>
+      {addButton ?
+        <AddRepair user={user}></AddRepair> : null}
     </Layout>
   );
 }

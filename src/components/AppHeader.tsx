@@ -16,8 +16,8 @@ type Props = {
 };
 
 const links = [
-  { name: "Dashboard", href: "/app", exact: true },
-  { name: "My Decks", href: "//app/decks" },
+  // { name: "Dashboard", href: "/app", exact: true },
+  { name: "My Decks", href: "/app/decks" },
 ];
 
 export default function Header({ user }: Props) {
@@ -77,7 +77,6 @@ export default function Header({ user }: Props) {
                               "!bg-primary !text-white":
                                 router.pathname === item.href,
                               "bg-base-200":
-                                !item.exact &&
                                 router.pathname !== item.href &&
                                 router.pathname.startsWith(item.href),
                             }
@@ -196,7 +195,7 @@ export default function Header({ user }: Props) {
                           "!bg-neutral !text-white":
                             router.pathname === item.href,
                           "bg-base-200":
-                            !item.exact &&
+
                             router.pathname !== item.href &&
                             router.pathname.startsWith(item.href),
                         }

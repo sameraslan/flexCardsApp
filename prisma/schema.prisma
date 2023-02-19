@@ -3,7 +3,6 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
@@ -121,7 +120,7 @@ model Car {
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  repairs Repair[]
+  cards Card[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -130,21 +129,18 @@ model Car {
   @@map("yelao")
 }
 
-model Repair {
+model Card {
   id String @id @default(cuid())
 
-  title       String
-  description String?
-  price       Int?
-  date        DateTime?
-  mileage     Int?
+  question    String
+  answer      String
 
-  carId String @map("car_id")
+  carId String @map("deck_id")
   car   Car    @relation(fields: [carId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([carId])
-  @@map("repairs")
+  @@map("cards")
 }

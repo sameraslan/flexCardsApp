@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import cx from "classnames";
-import dayjs from "dayjs";
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
@@ -18,38 +17,17 @@ import { createRepairSchema } from "@/server/schema/repair.schema";
 import { trpc } from "@/utils/trpc";
 
 export default function AddRepair({
-  user,
+  user
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-
-  const { data: lastMileage } = trpc.repair.getHighestMileage.useQuery(
-    {
-      carId: router.query.carId as string,
-    },
-    {
-      onSuccess: (data) => {
-        setValue("mileage", data.mileage ?? 0);
-      },
-      enabled: Boolean(router.query.carId),
-    }
-  );
-
-  const { data: firstDate } = trpc.repair.getFirstRepairDate.useQuery(
-    {
-      carId: router.query.carId as string,
-    },
-    {
-      enabled: Boolean(router.query.carId),
-    }
-  );
-
   const { mutate } = trpc.repair.create.useMutation({
     onSuccess: () => {
-      toast.success("Repair added successfully!");
+      toast.success("Card added successfully!");
       router.push({
-        pathname: "//app/decks/[carId]/repairs",
+        pathname: "/app/decks/[carId]",
         query: { carId: router.query.carId },
       });
+      router.reload();
     },
   });
 
@@ -78,7 +56,7 @@ export default function AddRepair({
         description="Test add card description"
       />
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-3xl">Add repair</h2>
+        <h2 className="text-3xl">Add Card</h2>
       </div>
       <div className="card w-full bg-secondary dark:bg-primary">
         <div className="card-body flex flex-col gap-0 p-4 sm:p-8">
@@ -88,7 +66,7 @@ export default function AddRepair({
           >
             <div className="form-control sm:col-span-2 lg:col-span-3">
               <label className="label" htmlFor="title">
-                Title
+                Question
               </label>
               <input
                 id="title"
@@ -110,7 +88,7 @@ export default function AddRepair({
             </div>
             <div className="form-control sm:col-span-2 lg:col-span-3">
               <label className="label" htmlFor="description">
-                Description
+                Answer
               </label>
               <textarea
                 id="description"
@@ -130,86 +108,6 @@ export default function AddRepair({
                 </span>
               </label>
             </div>
-            <div className="form-control">
-              <label className="label" htmlFor="price">
-                Price
-              </label>
-              <input
-                id="price"
-                type="number"
-                defaultValue={0}
-                className={cx(
-                  "input-bordered input shadow-none focus:border-accent",
-                  {
-                    "input-error": Boolean(errors.price?.message),
-                    "input-accent": !Boolean(errors.price?.message),
-                  }
-                )}
-                {...register("price", {
-                  valueAsNumber: true,
-                })}
-              />
-              <label htmlFor="price" className="label">
-                <span className="label-text-alt text-error">
-                  {errors.price?.message}
-                </span>
-              </label>
-            </div>
-            <div className="form-control">
-              <label className="label" htmlFor="date">
-                Date
-              </label>
-              <input
-                id="date"
-                type="date"
-                defaultValue={dayjs().format("YYYY-MM-DD")}
-                min={
-                  firstDate?.date
-                    ? dayjs(firstDate.date).format("YYYY-MM-DD")
-                    : undefined
-                }
-                max={dayjs().format("YYYY-MM-DD")}
-                className={cx(
-                  "input-bordered input shadow-none focus:border-accent",
-                  {
-                    "input-error": Boolean(errors.date?.message),
-                    "input-accent": !Boolean(errors.date?.message),
-                  }
-                )}
-                {...register("date")}
-              />
-              <label htmlFor="date" className="label">
-                <span className="label-text-alt text-error">
-                  {errors.date?.message}
-                </span>
-              </label>
-            </div>
-            <div className="form-control">
-              <label className="label" htmlFor="mileage">
-                Mileage
-              </label>
-              <input
-                id="mileage"
-                type="number"
-                defaultValue={0}
-                min={lastMileage?.mileage ?? 0}
-                className={cx(
-                  "input-bordered input shadow-none focus:border-accent",
-                  {
-                    "input-error": Boolean(errors.mileage?.message),
-                    "input-accent": !Boolean(errors.mileage?.message),
-                  }
-                )}
-                {...register("mileage", {
-                  valueAsNumber: true,
-                })}
-              />
-              <label htmlFor="mileage" className="label">
-                <span className="label-text-alt text-error">
-                  {errors.mileage?.message}
-                </span>
-              </label>
-            </div>
             <button
               className={cx(
                 "btn-accent btn mx-auto mt-2 w-full max-w-sm sm:col-span-2 lg:col-span-3",
@@ -220,7 +118,7 @@ export default function AddRepair({
               disabled={isSubmitting}
               type="submit"
             >
-              {isSubmitting ? "Adding repair" : "Add repair"}
+              {isSubmitting ? "Adding card" : "Add Card"}
             </button>
           </form>
         </div>

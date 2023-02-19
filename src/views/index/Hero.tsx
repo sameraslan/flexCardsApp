@@ -12,9 +12,9 @@ export default function Hero() {
           {/* <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
             Flash woo
           </p> */}
-          <Link className="btn-outline btn w-full sm:w-auto" href="/app">
+          {/* <Link className="btn-outline btn w-full sm:w-auto" href="/app">
             Get Started
-          </Link>
+          </Link> */}
         </div>
       </div>
     </section>

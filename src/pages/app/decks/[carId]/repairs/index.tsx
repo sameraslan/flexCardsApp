@@ -16,6 +16,7 @@ import Layout from "@/layouts/Layout";
 import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 import { formatDate, formatMileage, formatPrice } from "@/utils/formatters";
 import { trpc } from "@/utils/trpc";
+import AddRepair from "./add"
 
 function RepairsList() {
   const [repairsParent] = useAutoAnimate<HTMLDivElement>();
@@ -74,7 +75,7 @@ function RepairsList() {
           Add your first repair by clicking the button below.
         </p>
         <Link
-          href={`//app/decks/${encodeURIComponent(
+          href={`/app/decks/${encodeURIComponent(
             query.carId as string
           )}/repairs/add`}
           className="btn mt-4"
@@ -91,7 +92,7 @@ function RepairsList() {
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-3xl">Your repairs</h2>
         <Link
-          href={`//app/decks/${encodeURIComponent(
+          href={`/app/decks/${encodeURIComponent(
             query.carId as string
           )}/repairs/add`}
           className="btn"
@@ -132,7 +133,7 @@ function RepairsList() {
                   <Link
                     className="btn-outline btn-success btn h-10 min-h-[2.5rem] border-none px-3"
                     aria-label="Edit repair"
-                    href={`//app/decks/${repair.carId}/repairs/${repair.id}`}
+                    href={`/app/decks/${repair.carId}/repairs/${repair.id}`}
                   >
                     <FiEdit size={18} />
                   </Link>

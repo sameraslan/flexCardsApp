@@ -18,64 +18,14 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "",
   adapter: PrismaAdapter(prisma),
   providers: [
-    // CredentialsProvider({
-    //   name: "Credentials",
-    //   credentials: {
-    //     email: {
-    //       label: "Address email",
-    //       type: "email",
-    //       placeholder: "john@doe.com",
-    //     },
-    //     password: { label: "Password", type: "password" },
-    //   },
-    //   async authorize(credentials) {
-    //     try {
-    //       const user = await prisma.user.findUnique({
-    //         where: { email: credentials?.email.toLowerCase() },
-    //       });
-
-    //       if (!user || !user?.hash || !credentials?.password) {
-    //         throw new Error("Incorrect username or password");
-    //       }
-
-    //       const isValidPassword = await verify(user.hash, credentials.password);
-
-    //       if (!isValidPassword) {
-    //         throw new Error("Incorrect username or password");
-    //       }
-
-    //       const { hash, ...userWithoutHash } = user;
-
-    //       return userWithoutHash;
-    //     } catch (error) {
-    //       if (error instanceof Error) {
-    //         process.env.NODE_ENV === "development"
-    //           ? console.error("Authorization error: ", error.message)
-    //           : null;
-
-    //         throw new Error(error.message);
-    //       }
-
-    //       return null;
-    //     }
-    //   },
-    // }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
-    // FacebookProvider({
-    //   clientId: process.env.FACEBOOK_CLIENT_ID || "",
-    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
-    // }),
-    // GithubProvider({
-    //   clientId: process.env.GITHUB_ID || "",
-    //   clientSecret: process.env.GITHUB_SECRET || "",
-    // }),
   ],
   callbacks: {
     async redirect({ baseUrl }) {
-      return `${baseUrl}/app`;
+      return `${baseUrl}/app/decks`;
     },
     async jwt({ token }) {
       if (token.email) {

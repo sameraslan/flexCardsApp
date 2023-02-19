@@ -95,7 +95,7 @@ export const repairRouter = router({
   getFirstRepairDate: protectedProcedure
     .input(repairParams.pick({ carId: true }))
     .query(async ({ input, ctx }) => {
-      const repair = await ctx.prisma.repair.findFirst({
+      const repair:any = await ctx.prisma.repair.findFirst({
         where: {
           carId: input.carId,
           AND: {

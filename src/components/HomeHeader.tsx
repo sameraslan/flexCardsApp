@@ -14,7 +14,7 @@ export default function Header() {
                 <span className="text-xl leading-5 tracking-wide">FlexCards</span>
               </h1>
             </Link>
-            <Link className="btn-outline btn absolute right-8" href="/app">
+            <Link className="btn-outline btn absolute right-8" href="/app/decks">
               Get Started
             </Link>
           </div>

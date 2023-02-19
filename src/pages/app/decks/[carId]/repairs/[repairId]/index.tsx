@@ -55,9 +55,9 @@ export default function EditRepair({
 
   const { mutate } = trpc.repair.update.useMutation({
     onSuccess: () => {
-      toast.success("Repair updated successfully!");
+      toast.success("Card updated successfully!");
       router.push({
-        pathname: "/app/decks/[carId]/repairs",
+        pathname: "/app/decks/[carId]",
         query: { carId: router.query.carId },
       });
     },
@@ -82,6 +82,8 @@ export default function EditRepair({
     });
   };
 
+  
+
   return (
     <Layout className="container pb-8 pt-24" user={user}>
       <Seo
@@ -91,7 +93,7 @@ export default function EditRepair({
       {!isLoading ? (
         <>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-3xl">Update repair</h2>
+            <h2 className="text-3xl">Edit Flashcard</h2>
           </div>
           <div className="card w-full bg-secondary dark:bg-primary">
             <div className="card-body flex flex-col gap-0 p-4 sm:p-8">
@@ -101,7 +103,7 @@ export default function EditRepair({
               >
                 <div className="form-control sm:col-span-2 lg:col-span-3">
                   <label className="label" htmlFor="title">
-                    Title
+                    Question
                   </label>
                   <input
                     id="title"
@@ -123,7 +125,7 @@ export default function EditRepair({
                 </div>
                 <div className="form-control sm:col-span-2 lg:col-span-3">
                   <label className="label" htmlFor="description">
-                    Description
+                    Answer
                   </label>
                   <textarea
                     id="description"
@@ -145,85 +147,6 @@ export default function EditRepair({
                     </span>
                   </label>
                 </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="price">
-                    Price
-                  </label>
-                  <input
-                    id="price"
-                    type="number"
-                    defaultValue={0}
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.price?.message),
-                        "input-accent": !Boolean(errors.price?.message),
-                      }
-                    )}
-                    {...register("price", {
-                      valueAsNumber: true,
-                    })}
-                  />
-                  <label htmlFor="price" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.price?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="date">
-                    Date
-                  </label>
-                  <input
-                    id="date"
-                    type="date"
-                    defaultValue={dayjs().format("YYYY-MM-DD")}
-                    min={
-                      firstDate?.date
-                        ? dayjs(firstDate.date).format("YYYY-MM-DD")
-                        : undefined
-                    }
-                    max={dayjs().format("YYYY-MM-DD")}
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.date?.message),
-                        "input-accent": !Boolean(errors.date?.message),
-                      }
-                    )}
-                    {...register("date")}
-                  />
-                  <label htmlFor="date" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.date?.message}
-                    </span>
-                  </label>
-                </div>
-                <div className="form-control">
-                  <label className="label" htmlFor="mileage">
-                    Mileage
-                  </label>
-                  <input
-                    id="mileage"
-                    type="number"
-                    defaultValue={0}
-                    className={cx(
-                      "input-bordered input shadow-none focus:border-accent",
-                      {
-                        "input-error": Boolean(errors.mileage?.message),
-                        "input-accent": !Boolean(errors.mileage?.message),
-                      }
-                    )}
-                    {...register("mileage", {
-                      valueAsNumber: true,
-                    })}
-                  />
-                  <label htmlFor="mileage" className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.mileage?.message}
-                    </span>
-                  </label>
-                </div>
                 <button
                   className={cx(
                     "btn-accent btn mx-auto mt-2 w-full max-w-sm sm:col-span-2 lg:col-span-3",
@@ -234,7 +157,7 @@ export default function EditRepair({
                   disabled={isSubmitting}
                   type="submit"
                 >
-                  {isSubmitting ? "Updating repair" : "Update repair"}
+                  {isSubmitting ? "Updating card" : "Update Card"}
                 </button>
               </form>
             </div>

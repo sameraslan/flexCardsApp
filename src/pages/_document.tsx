@@ -73,7 +73,6 @@ export default function Document() {
           sizes="16x16"
           href="/assets/favicons/favicon-16x16.png"
         />
-        <link rel="manifest" href="/assets/favicons/site.webmanifest" />
         <link
           rel="mask-icon"
           href="/assets/favicons/safari-pinned-tab.svg"
