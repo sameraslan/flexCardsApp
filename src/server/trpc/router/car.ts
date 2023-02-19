@@ -24,10 +24,6 @@ export const carRouter = router({
         vin: true,
         generation: true,
         productionYear: true,
-        engineType: true,
-        engineCapacity: true,
-        enginePower: true,
-        gearboxType: true,
       },
     });
   }),
@@ -47,10 +43,6 @@ export const carRouter = router({
         vin: true,
         generation: true,
         productionYear: true,
-        engineType: true,
-        engineCapacity: true,
-        enginePower: true,
-        gearboxType: true,
         repairs: {
           select: {
             id: true,
@@ -75,13 +67,7 @@ export const carRouter = router({
         type: true,
         make: true,
         model: true,
-        vin: true,
-        generation: true,
         productionYear: true,
-        engineType: true,
-        engineCapacity: true,
-        enginePower: true,
-        gearboxType: true,
       },
     });
   }),

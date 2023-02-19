@@ -122,36 +122,6 @@ export default function Header({ user }: Props) {
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800">
                         <Menu.Item>
                           {({ active }) => (
-                            <Link
-                              href="/app/profile"
-                              className={cx(
-                                "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300",
-                                {
-                                  "bg-gray-100 dark:bg-gray-600/30": active,
-                                }
-                              )}
-                            >
-                              Your Profile
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              href="/app/settings"
-                              className={cx(
-                                "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300",
-                                {
-                                  "bg-gray-100 dark:bg-gray-600/30": active,
-                                }
-                              )}
-                            >
-                              Settings
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
                             <button
                               onClick={() => signOut()}
                               className={cx(

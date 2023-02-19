@@ -112,10 +112,6 @@ model Car {
   vin            String?
   generation     String?
   productionYear Int          @map("production_year")
-  engineType     EngineType?  @map("engine_type")
-  engineCapacity Int?         @map("engine_capacity")
-  enginePower    Int?         @map("engine_power")
-  gearboxType    GearboxType? @map("gearbox_type")
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)

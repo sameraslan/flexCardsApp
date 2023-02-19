@@ -1,19 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import cx from "classnames";
 import type { InferGetServerSidePropsType } from "next";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import type { ClientSafeProvider } from "next-auth/react";
 import { getCsrfToken, getProviders, signIn } from "next-auth/react";
-import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
-import { DiGithubBadge } from "react-icons/di";
-import { SiFacebook, SiGoogle, SiTwitter } from "react-icons/si";
-import { toast } from "react-toastify";
-
+import { SiGoogle } from "react-icons/si";
 import Seo from "@/components/Seo";
-import type { LoginSchema } from "@/server/schema/auth.schema";
-import { loginSchema } from "@/server/schema/auth.schema";
+
 
 function getCallbackUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -24,12 +14,6 @@ function providerIcon(providerName: ClientSafeProvider["name"]) {
   switch (providerName) {
     case "Google":
       return <SiGoogle className="h-4 w-4" />;
-    case "Facebook":
-      return <SiFacebook className="h-4 w-4" />;
-    case "Twitter":
-      return <SiTwitter className="h-4 w-4" />;
-    case "GitHub":
-      return <DiGithubBadge className="h-6 w-6" />;
     default:
       return undefined;
   }
@@ -49,35 +33,8 @@ function providerButton(provider: ClientSafeProvider) {
 
 export default function Login({
   providers,
-  csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const onSubmit: SubmitHandler<LoginSchema> = async (values) => {
-    const result = await signIn("credentials", {
-      redirect: false,
-      ...values,
-    });
-
-    if (result?.error) {
-      toast.error(result.error);
-      return;
-    }
-
-    if (result?.ok) {
-      toast.success("Logged in successfully!");
-      router.push(result?.url ? result.url : "/app/decks");
-      return;
-    }
-  };
 
   return (
     <>

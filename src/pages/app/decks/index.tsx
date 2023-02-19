@@ -22,7 +22,6 @@ import Loader from "@/components/Loader";
 import Seo from "@/components/Seo";
 import Layout from "@/layouts/Layout";
 import { getServerAuthSession } from "@/server/common/get-server-auth-session";
-import { formatEngineCapacity } from "@/utils/formatters";
 import { trpc } from "@/utils/trpc";
 
 /*Clean codebase; add readme */
@@ -107,7 +106,7 @@ function CarsList() {
               <div className="flex flex-grow flex-col gap-5 pb-3">
                 <div className="flex flex-col gap-1">
                   <h4 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
-                    {deck.make} {deck.model}
+                    {deck.make}
                   </h4>
                 </div>
               </div>
